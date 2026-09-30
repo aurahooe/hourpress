@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hour Press</title>
+  <meta name="description" content="A small public room that turns over every hour." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="mast">
+    <div class="mast-left">
+      <p class="mark">HP</p>
+      <div>
+        <h1>Hour Press</h1>
+        <p class="sub">Printed once an hour. Saved forever.</p>
+      </div>
+    </div>
+    <nav class="mast-nav">
+      <button type="button" data-go="floor">The floor</button>
+      <button type="button" data-go="desk">Your desk</button>
+      <button type="button" data-go="archive">Past hours</button>
+    </nav>
+    <div class="mast-right">
+      <div class="clock" id="clock">
+        <span id="clock-time">—</span>
+        <span id="clock-left" class="muted">until reprint</span>
+      </div>
+      <button type="button" class="ghost" id="auth-btn">Sign in</button>
+    </div>
+  </header>
+  <main>
+    <section class="edition" id="edition">
+      <p class="kicker" id="ed-kicker">Loading the hour…</p>
+      <h2 id="ed-title"></h2>
+      <p class="lede" id="ed-body"></p>
+    </section>
+    <section class="floor" id="floor">
+      <div class="section-head">
+        <h3>On the floor</h3>
+        <p>Notes marked public. Anyone can read them. The author still owns the ink.</p>
+      </div>
+      <div class="cards" id="public-notes"></div>
+    </section>
+    <section class="desk hidden" id="desk">
+      <div class="section-head">
+        <h3>Your desk</h3>
+        <p>Write something. Keep it private, or send it to the floor.</p>
+      </div>
+      <form id="note-form" class="composer">
+        <input name="title" maxlength="120" placeholder="A short title" required />
+        <textarea name="body" maxlength="8000" rows="7" placeholder="The rest of it." required></textarea>
+        <label class="check">
+          <input type="checkbox" name="is_public" />
+          <span>Mark public — it will appear on the floor</span>
+        </label>
+        <button type="submit">Save note</button>
+      </form>
+      <div class="cards" id="my-notes"></div>
+    </section>
+    <section class="archive hidden" id="archive">
+      <div class="section-head">
+        <h3>Past hours</h3>
+        <p>Each reprint stays. The room does not forget the last lamp.</p>
+      </div>
+      <div class="hours" id="hours"></div>
+    </section>
+  </main>
+  <div class="modal hidden" id="auth-modal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button class="close" id="auth-close" type="button" aria-label="Close">×</button>
+      <h3>Sign in to the press</h3>
+      <p class="muted">Email and password. Your notes live in your account. Public notes stay public until you pull them back.</p>
+      <form id="auth-form">
+        <input type="email" name="email" placeholder="you@somewhere.test" required autocomplete="email" />
+        <input type="password" name="password" placeholder="password, eight characters at least" minlength="8" required autocomplete="current-password" />
+        <div class="row">
+          <button type="submit">Sign in</button>
+          <button type="button" class="ghost" id="signup-btn">Create account</button>
+        </div>
+        <p class="err" id="auth-err"></p>
+      </form>
+    </div>
+  </div>
+  <footer>
+    <p>Hour Press · a room, not a product · public notes are public on purpose</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
